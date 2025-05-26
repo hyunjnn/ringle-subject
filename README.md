@@ -31,7 +31,6 @@ docker-compose up
 ### 2. 애플리케이션 서버 실행
 ### 3. localhost:8081 접속(Adminer)
 - 아래 정보로 로그인 후 기본 테스트 데이터 삽입
-
 ```
 서버 (host): ringle-mysql   
 사용자 이름: ringle  
@@ -66,3 +65,6 @@ VALUES
 INSERT INTO student_lesson_packages (student_id, lesson_package_id, remaining_count, start_date, end_date, created_at, updated_at)
 VALUES (1, 1, 5, NOW(), DATE_ADD(NOW(), INTERVAL 30 DAY), NOW(), NOW())
 ```
+
+### 4. 로컬에서 API 테스트 실행
+- http://localhost:8080/swagger-ui/index.html
