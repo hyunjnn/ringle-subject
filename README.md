@@ -3,14 +3,13 @@
 학생과 튜터 간 1:1 수업을 위한 수강 신청 서비스입니다. 수업은 30분 또는 60분 단위로 정각 혹은 30분에 시작되며, 튜터는 자신이 수업 가능한 시간대를 등록하고, 학생은 해당 시간과 수업 길이에 맞는 튜터를 선택하여 수업을 신청할 수 있습니다.
 
 ### 튜터 기능
-- 수업 가능한 시간대 생성: `POST /api/v1/tutors/{tutorId}/schedules`
-- 수업 가능한 시간대 삭제: `DELETE /api/v1/tutors/{tutorId}/schedules`
+- 수업 가능한 시간대 생성
+- 수업 가능한 시간대 삭제
 
 ### 학생 기능
-- 특정 기간 & 수업 길이로 수업 가능한 시간대 조회: `POST /api/v1/students/available-slots`
-- 특정 시간대 & 수업 길이로 수업 가능한 튜터 조회: `POST /api/v1/students/available-tutors`
-- 수업 신청: `POST /api/v1/students/{userId}/bookings`
-- 수업 신청 내역 조회: `GET /api/v1/students/{userId}/bookings`
+- 특정 기간 & 수업 길이로 예약 가능한 수업 조회
+- 특정 시간대 & 수업 길이로 예약 가능한 튜터 조회
+- 수업 신청 및 내역 조회
 
 ### 설계 참고 사항
 - 수업 시작 시간은 정각 또는 30분만 허용 (TimeSlot)
@@ -18,10 +17,24 @@
 - 예약 시 수업권 잔여 횟수 감소
 - 예약된 스케줄은 튜터가 삭제할 수 없음
 
+### 흐름
+```
+학생 A는 30분 수업 5회권을 구매 → StudentLessonPackage 생성
+
+튜터 B는 6/1 10:00, 10:30에 수업 가능하도록 TutorSchedule 등록
+
+학생 A가 6/1 10:00에 30분 수업을 예약함
+
+    Booking 생성
+    
+    tutorSchedule.isAvailable = false
+    
+    StudentLessonPackage.remainingCount--
+```
 ### 기술 스택
-- Java 21, Spring Boot, Spring Data JPA
+- Java 21, Spring Boot, Spring Data JPA, Swagger
 - MySQL
-- gradle
+- Gradle
 
 ## 테스트 방법
 ### 1. 도커 실행(Mysql, Adminer)
