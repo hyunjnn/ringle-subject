@@ -1,6 +1,6 @@
-package org.example.ringlesubject.domain.booking.repository;
+package org.example.ringlesubject.domain.lesson.repository;
 
-import org.example.ringlesubject.domain.booking.entity.Booking;
+import org.example.ringlesubject.domain.lesson.entity.Booking;
 import org.example.ringlesubject.domain.schedule.entity.TutorSchedule;
 import org.example.ringlesubject.domain.student.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;

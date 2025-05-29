@@ -1,11 +1,11 @@
-package org.example.ringlesubject.domain.booking.service;
+package org.example.ringlesubject.domain.lesson.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.ringlesubject.domain.booking.dto.request.BookingReqDto;
-import org.example.ringlesubject.domain.booking.dto.response.BookingResDto;
-import org.example.ringlesubject.domain.booking.entity.Booking;
-import org.example.ringlesubject.domain.booking.enums.BookingStatus;
-import org.example.ringlesubject.domain.booking.repository.BookingRepository;
+import org.example.ringlesubject.domain.lesson.dto.request.BookingLessonRequest;
+import org.example.ringlesubject.domain.lesson.dto.response.BookingLessonResponse;
+import org.example.ringlesubject.domain.lesson.entity.Booking;
+import org.example.ringlesubject.domain.lesson.enums.BookingStatus;
+import org.example.ringlesubject.domain.lesson.repository.BookingRepository;
 import org.example.ringlesubject.domain.lesson.entity.StudentLessonPackage;
 import org.example.ringlesubject.domain.lesson.repository.StudentLessonPackageRepository;
 import org.example.ringlesubject.domain.schedule.entity.TutorSchedule;
@@ -28,7 +28,7 @@ public class BookingService {
     private final StudentLessonPackageRepository studentLessonPackageRepository;
 
     @Transactional
-    public BookingResDto createBooking(Long userId, BookingReqDto dto) {
+    public BookingLessonResponse createBooking(Long userId, BookingLessonRequest dto) {
         Student student = studentRepository.findById(userId).orElseThrow();
         TutorSchedule schedule = tutorScheduleRepository.findById(dto.getTutorScheduleId()).orElseThrow();
 
@@ -55,25 +55,25 @@ public class BookingService {
         schedule.setAvailable(false);
         studentLesson.decreaseRemaining();
 
-        return new BookingResDto(
-                booking.getBookingId(),
-                booking.getLessonDuration(),
-                booking.getBookingStatus(),
-                schedule.getTutor().getTutorName(),
-                schedule.getTimeSlot().getStartTime().toString()
-        );
+        return BookingLessonResponse.builder()
+                .bookingId(booking.getBookingId())
+                .lessonDuration(booking.getLessonDuration())
+                .bookingStatus(booking.getBookingStatus())
+                .tutorName(schedule.getTutor().getTutorName())
+                .startTime(schedule.getTimeSlot().getStartTime().toString())
+                .build();
     }
 
-    public List<BookingResDto> getUserBookings(Long userId) {
+    public List<BookingLessonResponse> getUserBookings(Long userId) {
         Student student = studentRepository.findById(userId).orElseThrow();
         return bookingRepository.findByStudent(student).stream()
-                .map(b -> new BookingResDto(
-                        b.getBookingId(),
-                        b.getLessonDuration(),
-                        b.getBookingStatus(),
-                        b.getTutorSchedule().getTutor().getTutorName(),
-                        b.getTutorSchedule().getTimeSlot().getStartTime().toString()
-                ))
+                .map(b -> BookingLessonResponse.builder()
+                        .bookingId(b.getBookingId())
+                        .lessonDuration(b.getLessonDuration())
+                        .bookingStatus(b.getBookingStatus())
+                        .tutorName(b.getTutorSchedule().getTutor().getTutorName())
+                        .startTime(b.getTutorSchedule().getTimeSlot().getStartTime().toString())
+                        .build())
                 .collect(Collectors.toList());
     }
 }

@@ -1,9 +1,8 @@
-package org.example.ringlesubject.domain.booking.entity;
+package org.example.ringlesubject.domain.lesson.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.ringlesubject.domain.booking.enums.BookingStatus;
-import org.example.ringlesubject.domain.lesson.entity.StudentLessonPackage;
+import org.example.ringlesubject.domain.lesson.enums.BookingStatus;
 import org.example.ringlesubject.domain.lesson.enums.LessonDuration;
 import org.example.ringlesubject.domain.schedule.entity.TutorSchedule;
 import org.example.ringlesubject.domain.student.entity.Student;

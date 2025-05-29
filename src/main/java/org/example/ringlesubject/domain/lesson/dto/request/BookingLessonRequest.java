@@ -1,4 +1,4 @@
-package org.example.ringlesubject.domain.booking.dto.request;
+package org.example.ringlesubject.domain.lesson.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,10 +8,7 @@ import org.example.ringlesubject.domain.lesson.enums.LessonDuration;
 @Getter
 @Builder
 @AllArgsConstructor
-public class BookingReqDto {
-
-//    private long timeSlotId;
-//    private long tutorScheduleId;
+public class BookingLessonRequest {
 
     private Long tutorScheduleId;
     private LessonDuration lessonDuration;
